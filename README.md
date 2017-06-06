@@ -1,6 +1,8 @@
 # neopixel-binary-clock
 Binary clock using Neopixels, ESP8266 and DS3231 real time clock.
 
+![front](front.jpg)
+
 ## Libraries used
 * [esp8266](https://github.com/esp8266/Arduino)
 * [NeoPixelBus by Makuna](https://github.com/Makuna/NeoPixelBus)
@@ -8,6 +10,10 @@ Binary clock using Neopixels, ESP8266 and DS3231 real time clock.
 
 ## Code used
 * [NTPClient example from esp8266](https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/examples/NTPClient/NTPClient.ino)
+
+## Timezones
+The program is configured to display CET, but this can be changed in ```timezone.h```. Daylight
+saving time is also implemented.
 
 ## Wiring
 Please check before connecting your hardware, this information might be wrong on some breakouts.
@@ -27,6 +33,4 @@ NeoPixels are unused. The program uses the following offsets to address the pixe
 * SDA -> GPIO04 (D2)
 * SCL -> GPIO05 (D1)
 
-## Timezones
-The program is configured to display CET, but this can be changed in ```timezone.h```. Daylight
-saving time is also implemented.
+![back](back.jpg)
