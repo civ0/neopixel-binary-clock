@@ -54,6 +54,7 @@ void setup()
 	Serial.print("Connecting to ");
 	Serial.println(ssid);
 	WiFi.begin(ssid, pass);
+	WiFi.setAutoReconnect(true);
 
 	while (WiFi.status() != WL_CONNECTED) {
 		delay(500);
@@ -83,7 +84,7 @@ void setup()
 void loop()
 {
 	RtcDateTime now = rtc.GetDateTime();
-	if (now.Hour() > lastUpdateTime.Hour()) {
+	if (now.Hour() > lastUpdateTime.Hour() || lastUpdateTime.Hour() == 23) {
 		UpdateClock();
 	}
 
