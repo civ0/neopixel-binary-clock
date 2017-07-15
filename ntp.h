@@ -34,12 +34,25 @@ void sendNTPpacket(IPAddress& address)
 RtcDateTime GetNTPTime()
 {
 	WiFi.hostByName(ntpServerName, timeServerIP);
-	sendNTPpacket(timeServerIP);
-	while (udp.parsePacket() == 0) {
-		Serial.println("No packet yet");
-		delay(20);
+	unsigned long start = millis();
+	bool success = false;
+	while (true) {
+		sendNTPpacket(timeServerIP);
+
+		while (udp.parsePacket() == 0) {
+			if ((millis() - start < 3000)) { // 3s timeout for NTP
+				Serial.println("No packet yet");
+				delay(20);
+			} else {
+				Serial.println("Retrying NTP");
+				continue; // retry NTP after timeout
+			}
+		}
+
+		Serial.println("Got answer");
+		break; // got NTP
 	}
-	Serial.println("Got answer");
+
 	udp.read(packetBuffer, NTP_PACKET_SIZE);
 	unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
 	unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
